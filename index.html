@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hebrews 11:1 — POS & Inventory</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <meta name="theme-color" content="#4b2e21" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Hebrews POS" />
+</head>
+<body>
+  <div id="app">
+    <div class="centered"><p class="muted">Loading...</p></div>
+  </div>
+
+  <!-- Receipt is rendered here for printing (58mm) -->
+  <div id="receipt-print"></div>
+
+  <!-- Supabase library loaded locally so the app works offline -->
+  <script src="js/vendor/supabase.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

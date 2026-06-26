@@ -1,0 +1,7 @@
+sql/
+README.md
+Dockerfile
+docker-compose.yml
+.dockerignore
+.git
+*.md

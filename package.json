@@ -1,0 +1,15 @@
+{
+  "name": "hebrews-pos",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Hebrews 11:1 Coffee Shop POS, Receipt & Inventory System",
+  "scripts": {
+    "test:e2e": "playwright test --project=mocked",
+    "test:live": "playwright test --project=live-smoke",
+    "test:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "serve": "^14.2.4"
+  }
+}

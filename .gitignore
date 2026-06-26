@@ -1,0 +1,26 @@
+# ---- Never commit these (secrets) ----
+.env
+.env.*
+*.local
+.netlify/
+
+# ---- Temp / build ----
+.deploy/
+node_modules/
+dist/
+
+# ---- Playwright / tests ----
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# ---- Editor / OS ----
+.vscode/
+.DS_Store
+Thumbs.db
+
+# NOTE: js/config.js IS intentionally committed.
+# The Supabase anon key is public by design (it ships to the browser) and is
+# protected by Row Level Security. Never put the service_role key, the database
+# password, or any Netlify/API token in this repo.

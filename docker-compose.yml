@@ -1,0 +1,10 @@
+# OPTIONAL — the easiest way to run this via Docker.
+#   docker compose up -d --build
+# Then open in a browser: http://localhost:8080
+services:
+  hebrews-pos:
+    build: .
+    container_name: hebrews-pos
+    ports:
+      - "8080:80"
+    restart: unless-stopped

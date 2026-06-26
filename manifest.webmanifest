@@ -1,0 +1,14 @@
+{
+  "name": "Hebrews 11:1 POS",
+  "short_name": "Hebrews POS",
+  "description": "POS, receipt and inventory system for Hebrews 11:1 coffee shop",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f3ead9",
+  "theme_color": "#4b2e21",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
