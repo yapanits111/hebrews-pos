@@ -8,7 +8,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 2 : undefined,
+  workers: process.env.CI ? 1 : undefined,
   reporter: [["html", { open: "never" }], ["list"]],
   use: {
     trace: "on-first-retry",
@@ -35,6 +35,6 @@ export default defineConfig({
     command: "npx serve -l 5500 .",
     url: "http://localhost:5500",
     reuseExistingServer: !process.env.CI,
-    timeout: 60_000,
+    timeout: 120_000,
   },
 });
