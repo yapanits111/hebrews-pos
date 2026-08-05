@@ -125,12 +125,13 @@ async function drawProducts(body) {
   // Table
   const table = el("table", { class: "data-table" });
   table.innerHTML = `<thead><tr>
-    <th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Active</th><th></th>
+    <th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Active</th><th></th>
   </tr></thead>`;
   const tbody = el("tbody");
   for (const p of data) {
     const tr = el("tr", { class: p.is_active ? "" : "inactive" });
     tr.append(
+      td(imageCell(p)),
       td(el("input", { class: "cell-in", value: p.name, "data-f": "name" })),
       td(el("input", { class: "cell-in cell-sm", value: p.category || "", "data-f": "category" })),
       td(el("input", { class: "cell-in cell-num", type: "number", step: "0.01", value: p.price, "data-f": "price" })),
@@ -145,6 +146,31 @@ async function drawProducts(body) {
   }
   table.append(tbody);
   body.append(el("div", { class: "card" }, el("h4", {}, "All Products"), table));
+}
+
+function imageCell(p) {
+  const wrap = el("div", { class: "img-cell" });
+  if (p.image_url) wrap.append(el("img", { class: "prod-thumb", src: p.image_url, alt: "" }));
+  wrap.append(el("input", {
+    type: "file", accept: "image/*", class: "img-file",
+    onchange: (e) => { if (e.target.files[0]) uploadProductImage(p.id, e.target.files[0]); },
+  }));
+  return wrap;
+}
+
+async function uploadProductImage(productId, file) {
+  if (file.size > 5 * 1024 * 1024) { toast("Image too large (max 5MB)", "warn"); return; }
+  toast("Uploading image...", "info");
+  const ext = (file.name.split(".").pop() || "jpg").toLowerCase();
+  const path = `product-${productId}-${Date.now()}.${ext}`;
+  const { error: upErr } = await supabase.storage
+    .from("product-images").upload(path, file, { upsert: true, contentType: file.type });
+  if (upErr) return toast("Upload failed: " + upErr.message, "error");
+  const { data } = supabase.storage.from("product-images").getPublicUrl(path);
+  const { error } = await supabase.from("products").update({ image_url: data.publicUrl }).eq("id", productId);
+  if (error) return toast(error.message, "error");
+  toast("Image saved", "success");
+  await renderInventory($("#view"));
 }
 
 async function addProduct() {

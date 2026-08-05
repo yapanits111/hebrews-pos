@@ -24,7 +24,7 @@ export async function renderPublicMenu(root, onLogin) {
   // Read active products (anon-readable). Fall back to cached menu offline.
   let data = null, error = null;
   if (navigator.onLine) {
-    const res = await supabase.from("products").select("name,category,price,is_active")
+    const res = await supabase.from("products").select("name,category,price,is_active,image_url")
       .eq("is_active", true).order("name");
     data = res.data; error = res.error;
   }
@@ -45,6 +45,7 @@ export async function renderPublicMenu(root, onLogin) {
     const items = el("div", { class: "pm-items" });
     for (const p of groups[cat]) {
       items.append(el("div", { class: "pm-item" },
+        p.image_url ? el("img", { class: "pm-img", src: p.image_url, alt: "", loading: "lazy" }) : null,
         el("span", { class: "pm-name" }, p.name),
         el("span", { class: "pm-dots" }, ""),
         el("span", { class: "pm-price" }, peso(p.price)),

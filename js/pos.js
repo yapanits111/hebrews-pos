@@ -70,6 +70,7 @@ async function loadMenu(menu) {
         onclick: () => addToCart(p),
         ...(out ? { disabled: "true" } : {}),
       },
+        p.image_url ? el("img", { class: "product-img", src: p.image_url, alt: "", loading: "lazy" }) : null,
         el("span", { class: "product-name" }, p.name),
         el("span", { class: "product-price" }, peso(p.price)),
         p.stock !== null ? el("span", { class: "product-stock" }, out ? "OUT OF STOCK" : `stock: ${p.stock}`) : null,
