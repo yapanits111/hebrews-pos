@@ -150,12 +150,29 @@ async function drawProducts(body) {
 
 function imageCell(p) {
   const wrap = el("div", { class: "img-cell" });
-  if (p.image_url) wrap.append(el("img", { class: "prod-thumb", src: p.image_url, alt: "" }));
+  if (p.image_url) {
+    wrap.append(el("img", { class: "prod-thumb", src: p.image_url, alt: "" }));
+    wrap.append(el("button", { class: "btn btn-danger btn-xs img-remove",
+      onclick: () => removeProductImage(p.id, p.image_url) }, "Remove image"));
+  }
   wrap.append(el("input", {
     type: "file", accept: "image/*", class: "img-file",
     onchange: (e) => { if (e.target.files[0]) uploadProductImage(p.id, e.target.files[0]); },
   }));
   return wrap;
+}
+
+async function removeProductImage(productId, imageUrl) {
+  if (!confirm("Remove this product's image?")) return;
+  // Best-effort delete of the file from storage (harmless if it fails).
+  try {
+    const path = imageUrl.split("/product-images/")[1];
+    if (path) await supabase.storage.from("product-images").remove([decodeURIComponent(path)]);
+  } catch (_) { /* ignore */ }
+  const { error } = await supabase.from("products").update({ image_url: null }).eq("id", productId);
+  if (error) return toast(error.message, "error");
+  toast("Image removed", "success");
+  await renderInventory($("#view"));
 }
 
 async function uploadProductImage(productId, file) {

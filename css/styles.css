@@ -201,6 +201,7 @@ h2, h3, h4 { margin: 0 0 .5rem; }
 .img-cell { display: flex; flex-direction: column; gap: .25rem; align-items: flex-start; }
 .prod-thumb { width: 44px; height: 44px; object-fit: cover; border-radius: 6px; border: 1px solid var(--line); }
 .img-file { font-size: .68rem; max-width: 130px; }
+.img-remove { font-size: .62rem; padding: .12rem .35rem; }
 .adj { display: flex; gap: .25rem; align-items: center; }
 .adj-in { max-width: 70px; }
 
