@@ -6,6 +6,7 @@
 
 # ---- Temp / build ----
 .deploy/
+netlify-publish/
 node_modules/
 dist/
 
