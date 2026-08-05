@@ -46,11 +46,13 @@ export async function renderPublicMenu(root, onLogin) {
     list.append(el("h3", { class: "pm-cat" }, cat));
     const items = el("div", { class: "pm-items" });
     for (const p of groups[cat]) {
-      items.append(el("div", { class: "pm-item" },
-        p.image_url ? el("img", { class: "pm-img", src: p.image_url, alt: "", loading: "lazy" }) : null,
-        el("span", { class: "pm-name" }, p.name),
-        el("span", { class: "pm-dots" }, ""),
-        el("span", { class: "pm-price" }, peso(p.price)),
+      items.append(el("div", { class: "pm-card" },
+        el("div", { class: "pm-card-img" },
+          p.image_url
+            ? el("img", { src: p.image_url, alt: "", loading: "lazy" })
+            : el("span", { class: "pm-card-emoji" }, "☕")),
+        el("div", { class: "pm-card-name" }, p.name),
+        el("div", { class: "pm-card-price" }, peso(p.price)),
       ));
     }
     list.append(items);
