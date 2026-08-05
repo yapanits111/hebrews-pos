@@ -31,6 +31,26 @@ test.describe("Authentication", () => {
     await expect(page.locator(".pm-title")).toHaveCount(0);
   });
 
+  test("logout asks for confirmation before signing out", async ({ page }) => {
+    await mockBackend(page, { role: "admin" });
+    await login(page);
+
+    await page.getByRole("button", { name: "Log out" }).click();
+
+    const modal = page.locator(".confirm-modal");
+    await expect(modal).toBeVisible();
+    await expect(modal).toContainText(/log out of hebrews/i);
+
+    // Cancel keeps you logged in.
+    await modal.getByRole("button", { name: "Cancel" }).click();
+    await expect(page.locator(".topbar")).toBeVisible();
+
+    // Confirming actually logs out (back to the public menu).
+    await page.getByRole("button", { name: "Log out" }).click();
+    await page.locator(".confirm-modal").getByRole("button", { name: "Log out" }).click();
+    await expect(page.getByRole("button", { name: "Staff Login" })).toBeVisible();
+  });
+
   test("wrong credentials show an error", async ({ page }) => {
     await mockBackend(page, { role: "admin" });
     // Override the token endpoint to reject the login.

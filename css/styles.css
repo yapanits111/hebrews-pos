@@ -40,6 +40,7 @@ h2, h3, h4 { margin: 0 0 .5rem; }
 .btn-danger  { background: #fff; color: var(--red); border-color: #e6b3ad; }
 .btn-ghost   { background: transparent; border-color: transparent; }
 .btn-sm      { padding: .3rem .55rem; font-size: 13px; }
+.btn-xs      { padding: .28rem .5rem; font-size: 12px; }
 .btn-block   { width: 100%; }
 
 /* ---- Layout: centered (login/setup) ---- */
@@ -215,6 +216,9 @@ h2, h3, h4 { margin: 0 0 .5rem; }
 .modal-overlay { position: fixed; inset: 0; background: rgba(40,25,15,.5); display: grid; place-items: center; z-index: 50; padding: 1rem; }
 .modal { background: #fff; border-radius: var(--radius); padding: 1rem; max-width: 90vw; box-shadow: 0 8px 40px rgba(0,0,0,.3); }
 .modal-actions { display: flex; gap: .5rem; justify-content: flex-end; margin-top: .8rem; }
+.confirm-modal { width: 340px; max-width: 90vw; }
+.confirm-modal h3 { margin-bottom: .3rem; }
+.confirm-msg { font-size: .88rem; margin: 0 0 .2rem; }
 .pw-modal { width: 320px; max-width: 90vw; }
 .pw-modal .pw-hint { font-size: .85rem; margin: .2rem 0 .6rem; }
 .pw-modal input { display: block; width: 100%; margin: .4rem 0; padding: .6rem .7rem; border: 1px solid var(--line); border-radius: 8px; }

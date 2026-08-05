@@ -100,8 +100,8 @@ function renderApp(activeTab) {
       el("span", { class: "net-badge", id: "net-status" }, ""),
       el("span", { class: "user-name" }, `${store.profile?.full_name || store.user?.email}`),
       el("span", { class: "role-badge " + roleClass() }, roleLabel()),
-      el("button", { class: "btn btn-ghost btn-sm", onclick: openChangePassword }, "🔑 Password"),
-      el("button", { class: "btn btn-ghost btn-sm", onclick: doLogout }, "Log out"),
+      el("button", { class: "btn btn-ghost btn-xs", onclick: openChangePassword }, "🔑 Change Password"),
+      el("button", { class: "btn btn-ghost btn-xs", onclick: doLogout }, "Log out"),
     ),
   );
 
@@ -200,8 +200,34 @@ function openChangePassword() {
   newIn.focus();
 }
 
+function confirmDialog({ title = "Confirm", message = "", confirmText = "Confirm" }) {
+  return new Promise((resolve) => {
+    const overlay = el("div", { class: "modal-overlay" });
+    const card = el("div", { class: "modal confirm-modal" });
+    const yes = el("button", { class: "btn btn-primary" }, confirmText);
+    const no = el("button", { class: "btn btn-ghost" }, "Cancel");
+    card.append(
+      el("h3", {}, title),
+      message ? el("p", { class: "muted confirm-msg" }, message) : null,
+      el("div", { class: "modal-actions" }, no, yes),
+    );
+    overlay.append(card);
+    document.body.append(overlay);
+    const close = (v) => { overlay.remove(); resolve(v); };
+    yes.onclick = () => close(true);
+    no.onclick = () => close(false);
+    overlay.onclick = (e) => { if (e.target === overlay) close(false); };
+    yes.focus();
+  });
+}
+
 async function doLogout() {
-  if (!confirm("Log out of Hebrews POS?")) return;
+  const ok = await confirmDialog({
+    title: "Log out of Hebrews POS?",
+    message: "You'll need to sign in again to use the POS.",
+    confirmText: "Log out",
+  });
+  if (!ok) return;
   await logout();
   showPublicMenu();
 }
