@@ -1,6 +1,6 @@
 // Service worker — caches the app shell so it loads offline.
 // Supabase API calls (cross-origin) pass through to the network untouched.
-const CACHE = "hebrews-pos-v9";
+const CACHE = "hebrews-pos-v10";
 const ASSETS = [
   "./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./favicon.svg",
   "./css/styles.css",

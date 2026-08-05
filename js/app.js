@@ -201,6 +201,7 @@ function openChangePassword() {
 }
 
 async function doLogout() {
+  if (!confirm("Log out of Hebrews POS?")) return;
   await logout();
   showPublicMenu();
 }
