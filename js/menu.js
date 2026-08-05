@@ -24,7 +24,9 @@ export async function renderPublicMenu(root, onLogin) {
   // Read active products (anon-readable). Fall back to cached menu offline.
   let data = null, error = null;
   if (navigator.onLine) {
-    const res = await supabase.from("products").select("name,category,price,is_active,image_url")
+    // select("*") is resilient: it never errors if a column (e.g. image_url
+    // before its migration is run) doesn't exist yet.
+    const res = await supabase.from("products").select("*")
       .eq("is_active", true).order("name");
     data = res.data; error = res.error;
   }
